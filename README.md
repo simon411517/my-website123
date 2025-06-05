@@ -124,6 +124,24 @@
       "1A0B4C": 43
     };
 
+    const rankingOrder = [
+      "5A0B0C",
+      "4A1B0C",
+      "4A0B1C",
+      "3A2B0C",
+      "3A1B1C",
+      "3A0B2C",
+      "2A3B0C",
+      "2A2B1C",
+      "2A1B2C",
+      "2A0B3C",
+      "1A4B0C",
+      "1A3B1C",
+      "1A2B2C",
+      "1A1B3C",
+      "1A0B4C"
+    ];
+
     const totalStudents = 74681;
 
     function calculateRank() {
@@ -151,16 +169,8 @@
         return;
       }
 
-      let sortedCategories = Object.keys(data).sort((a, b) => {
-        let [aA, aB, aC] = a.match(/\d+/g).map(Number);
-        let [bA, bB, bC] = b.match(/\d+/g).map(Number);
-        if (aA !== bA) return bB - aA;
-        if (aB !== bB) return aB - bB;
-        return aC - bC;
-      });
-
       let betterCount = 0;
-      for (let cat of sortedCategories) {
+      for (let cat of rankingOrder) {
         if (cat === category) break;
         betterCount += data[cat];
       }
@@ -171,11 +181,10 @@
       document.getElementById('result').innerHTML = 
         `<div class="card">
           你的成績類別是：<b>${category}</b><br><br>
-          預估排名：約第 <b>${rank}</b> 名<br><br>
+          預估排名：約第 <b>${rank} / ${totalStudents}</b> 名<br><br>
           預估超越約 <b>${(100 - percentile).toFixed(2)}%</b> 的考生
         </div>`;
 
-      // 清空選單
       document.getElementById('chinese').value = "";
       document.getElementById('math').value = "";
       document.getElementById('english').value = "";
